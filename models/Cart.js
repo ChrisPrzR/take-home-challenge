@@ -16,12 +16,14 @@ class ShoppingCart {
 	removeItem(id, propertyId) {
 		for (const item in this.items){
 			if (this.items[item].brickId === id && this.items[item].propertyId === propertyId){
-				item.updateInProgress()
+				this.items[item].updateInProgress()
 				this.items.splice(item, 1);
+			} else {
+				return [false, []]
 			}
 		};
 		this.#sortItems();
-		return this.items;
+		return [true, this.items];
 	}
 
 	getTotalPrice() {
@@ -34,6 +36,7 @@ class ShoppingCart {
 
 	checkout() {
 		const totalPrice = this.getTotalPrice();
+		// Process payment logic
 		console.log(`Checkout completed. Total price: ${totalPrice}`);
 	};
 

@@ -1,5 +1,4 @@
 const ShoppingCart = require('../models/Cart');
-const { validationResult } = require('express-validator')
 
 let cart;
 
@@ -10,11 +9,6 @@ const addToCart = async (req, res) => {
     }
 
     const { brickId, propertyId, price } = req.body; 
-    const errors = validationResult(req);
-    
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array()});
-    }
 
     try {
         
@@ -22,7 +16,7 @@ const addToCart = async (req, res) => {
         res.status(201).json({
             ok: true,
             msg: 'Brick added successfully',
-            data: cart
+            data: cart.items
         });
 
     }catch(err){
@@ -47,12 +41,19 @@ const removeFromCart = async (req, res) => {
             });
         };
 
-        cart.removeItem(brickId, propertyId)
+        const [isInCart] = cart.removeItem(brickId, propertyId);
 
-        res.status(201).json({
+        if (!isInCart) {
+            return res.status(401).json({
+                ok: false,
+                msg: 'Item not in cart'
+            });
+        }
+
+        res.status(200).json({
             ok: true,
             msg: 'Brick removed successfully',
-            data: cart
+            data: cart.items
         });
 
     } catch(err){
@@ -64,7 +65,40 @@ const removeFromCart = async (req, res) => {
     };
 };
 
+const processCart = (req, res) => {
+
+    const { terms, details } = req.body;
+
+    try {
+        
+        if(!terms || !details) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Please accept our Terms and conditions'
+            });
+        };
+
+        cart.processCart()
+
+        res.status(200).json({
+            ok: true,
+            msg: 'Congratulations! Purchase successful! ',
+            data: cart
+        });
+
+    } catch(err){
+        console.log(err);
+        res.status(500).json({
+            ok: false,
+            msg: 'Something went wrong here...'
+        });
+    };
+
+
+}
+
 module.exports = {
     addToCart, 
-    removeFromCart
+    removeFromCart,
+    processCart
 };
