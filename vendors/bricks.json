@@ -1,0 +1,20 @@
+{"results": [
+    {
+        "id": 1,
+        "propertyId": 1,
+        "price": 100,
+        "inProgress": true
+    },
+    {
+        "id": 2,
+        "propertyId": 1,
+        "price": 100,
+        "inProgress": false
+    },
+    {
+        "id": 3,
+        "propertyId":2,
+        "price": 100,
+        "inProgress": false
+    }
+]}

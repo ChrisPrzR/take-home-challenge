@@ -1,23 +1,9 @@
+const brickList = require('../vendors/bricks.json');
+
 const listBricks = async (req, res) => {
 
     try {
-        const data = {"results": [
-            {
-                "id": 1,
-                "propertyId": 1,
-                "price": 100,
-            },
-            {
-                "id": 2,
-                "propertyId": 1,
-                "price": 100,
-            },
-            {
-                "id": 3,
-                "propertyId":2,
-                "price": 100,
-            }
-        ]}
+        const data = brickList;
 
         res.status(201).json({
             ok: true,

@@ -6,19 +6,22 @@ class ShoppingCart {
 	}
 
 	addItem(brickId, propertyId, price) {
-		const brick = new Brick(brickId, propertyId, price)
+		const brick = new Brick(brickId, propertyId, price);
+		brick.updateInProgress();
 		this.items.push(brick);
-		return this.items
-	}
+		this.#sortItems();
+		return this.items;
+	};
 
 	removeItem(id, propertyId) {
 		for (const item in this.items){
 			if (this.items[item].brickId === id && this.items[item].propertyId === propertyId){
-				console.log(this.items[item]);
+				item.updateInProgress()
 				this.items.splice(item, 1);
 			}
-		}
-		return this.items
+		};
+		this.#sortItems();
+		return this.items;
 	}
 
 	getTotalPrice() {
@@ -27,12 +30,16 @@ class ShoppingCart {
 			totalPrice += item.price;
 		}
 		return totalPrice;
-	}
+	};
 
 	checkout() {
 		const totalPrice = this.getTotalPrice();
 		console.log(`Checkout completed. Total price: ${totalPrice}`);
-	}
+	};
+
+	#sortItems() {
+		this.items.sort((a, b) => a.propertyId - b.propertyId);
+	};
 }
 
 module.exports = ShoppingCart;

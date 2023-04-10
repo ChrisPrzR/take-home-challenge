@@ -18,8 +18,7 @@ const addToCart = async (req, res) => {
 
     try {
         
-        const list = cart.addItem(brickId, propertyId, price);
-        console.log(list);
+        cart.addItem(brickId, propertyId, price);
         res.status(201).json({
             ok: true,
             msg: 'Brick added successfully',
@@ -48,8 +47,7 @@ const removeFromCart = async (req, res) => {
             });
         };
 
-        const list = cart.removeItem(brickId, propertyId)
-        console.log(list);
+        cart.removeItem(brickId, propertyId)
 
         res.status(201).json({
             ok: true,

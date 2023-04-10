@@ -4,14 +4,16 @@ class Brick {
         this.brickId = brickId;
         this.propertyId = propertyId;
         this.price = price;
+        this.inProgress = false;
     }
 
     updatePrice(price) {
         this.price = price;
     }
 
-    purchaseInProgress(){}
-    // Find if current brick is in a cart
+    updateInProgress() {
+        this.inProgress = !this.inProgress
+    }
 }
 
 module.exports = Brick;
